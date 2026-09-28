@@ -1,0 +1,42 @@
+
+public delegate void DamageTake(int takedamage);
+
+class Spelare
+{
+    private int hp = 10;
+
+    private void PlayerDamaged(int takedamage)
+    {
+        if (takedamage > 0)
+        {
+            hp -= takedamage;
+        }
+        Console.WriteLine(hp.ToString());
+    }
+}
+
+class Explosion
+{
+    private int damage = 5;
+
+    public event DamageTake explosiondamage;
+
+    public void TriggerEvent()
+    {
+        explosiondamage?.Invoke(damage);
+    }
+
+}
+
+class värld
+{
+    private Spelare s = new Spelare();
+    private Explosion e = new Explosion();
+
+    värld()
+    {
+        e.explosiondamage += s.PlayerDamaged;
+        e.TriggerEvent();
+    }
+
+}
