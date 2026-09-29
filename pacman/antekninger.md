@@ -1,4 +1,7 @@
 ﻿
+TODO: 10
+
+
 datatyp  klass
 datatyp-typ    Entity, program
 instans             new Entity();

@@ -21,18 +21,7 @@ public class AssetManager
     // {
     //     
     // }
-
-    private Texture TheTexture
-    {
-        get => new Texture($"{AssetPath}pacman.png");
-    } 
-    private Texture TheFont
-    {
-        get => new Texture($"{AssetPath}pixel-font.ttf");
-    } 
-    private Texture TheLvel
-    {
-        get => new Texture($"{AssetPath}level.txt");
-    } 
-
+    public static readonly Texture GameTexture = new Texture($"{AssetPath}pacman.png");
+    public static readonly Font GameFont = new Font($"{AssetPath}pixel-font.ttf");
+    public static string levelFilePath => $"{AssetPath}level.txt";
 }

@@ -22,7 +22,7 @@ class Program
                 deltaTime = MathF.Min(deltaTime, 0.01f);
                 
                 // TODO: Updates
-                window.Clear(new Color(223, 246, 245));
+                window.Clear(new Color(30,40,60));
                 
                 // TODO: Drawing
                 window.Display();
