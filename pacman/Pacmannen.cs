@@ -11,7 +11,9 @@ public class Pacmannen : Actor
         base.Create(scene);
         sprite.TextureRect = new IntRect(0, 0, 18, 18);
         speed = 100;
+        animYOffsets = [0, 18];
     }
+    
 
     protected override int PickDirection(Scene scene)
     {

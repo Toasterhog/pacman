@@ -73,5 +73,24 @@ public class Actor : Entity
             > 432 => new Vector2f(0, Position.Y),
             _ => Position // om position value inte matcha dem övre så kommer den bara returna position
         };
+        Animate(deltaTime);
+    }
+
+    private float animationTime = 0;
+    private const float SPF = 1.0f / 10.0f;
+    protected int[] animYOffsets = [0, 54];
+    protected void Animate(float deltatime)
+    {
+        animationTime += deltatime;
+        IntRect rect = sprite.TextureRect;
+        if (animationTime > 2 * SPF)
+        {
+            animationTime -= 2 * SPF;
+            rect.Left = animYOffsets[0];
+        }else if  (animationTime > SPF)
+        {
+            rect.Left = animYOffsets[1];
+        }
+        sprite.TextureRect = rect;
     }
 }

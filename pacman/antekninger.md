@@ -1,4 +1,17 @@
 ﻿
+protected static int ToDirection(Vector2f vector)
+{
+if (vector.X > 0.9f ) return 0;
+if (vector.Y > 0.9) return 1;
+if (vector.X < -0.9f) return 2;
+if (vector.Y < -0.9f) return 3;
+Console.WriteLine("Actor.ToDirection() körd med ogiltig input: " + vector.ToString());
+return -1;
+}
+
+
+
+
 TODO: 10
 
 
