@@ -25,6 +25,7 @@ class Program
                 deltaTime = MathF.Min(deltaTime, 0.1f);
                 
                 // TODO: Updates
+                scene.UpdateAll(deltaTime);
                 
                 // TODO: Drawing
                 window.Clear(new Color(30,40,60));

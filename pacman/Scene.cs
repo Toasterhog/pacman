@@ -32,7 +32,13 @@ public class Scene
             entity.Destroy(this);
         }
     }
-
+    public void UpdateAll(float deltaTime)
+    {
+        foreach (Entity entity in entities)
+        {
+            entity.Update(this, deltaTime);
+        }
+    }
     public void RenderAll(RenderTarget target)
     {
         foreach (Entity entity in entities)
@@ -41,7 +47,7 @@ public class Scene
         }
     }
     public IEnumerable<Entity> FindIntersects(FloatRect bounds)
-    {
+    {//hje jag heter anton kommerntaren
         int lastEntity = entities.Count - 1;
         for (int i = lastEntity; i >= 0; i--)
         {
@@ -53,8 +59,27 @@ public class Scene
             }
         }
     }
-    
+    public bool FindByType<T>(out T found) where T : Entity
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            if (entities[i] is T match)
+            {
+                found = match;
+                return true;
+            }
+            Entity entity = entities[i];
+            if (!entity.dead && entity is T typed)
+            {
+                found = typed;
+                return true;
+            }
+        }
+        found = null;
+        return false;
+    } // säger bara att T måste vara en entity eller att den måste ärva något från entity
     //public void Update(float deltaTime){}
     //TODO 10 11
+    
 
 }

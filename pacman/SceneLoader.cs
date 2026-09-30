@@ -22,6 +22,10 @@ public class LevelLoader
         {
             case '#':
                 return new Wall();
+            case 'p':
+                return new Pacmannen();
+            case 'g':
+                return new Ghost();
             default:
                 return null;
         }

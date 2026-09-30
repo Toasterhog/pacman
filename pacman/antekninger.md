@@ -2,13 +2,20 @@
 TODO: 10
 
 
-datatyp  klass
-datatyp-typ    Entity, program
-instans             new Entity();
+#datatyp  klass 
+
+##datatyp-typ    Entity, program 
+
+####instans             new Entity(); 
 
 
+<h1> AI </h1>
 
-datatyp  deleate
+<div style="background-color : darksalmon; ">
+    <a> http://dfgfdgg </a>
+
+
+<h1>datatyp  deleate</h1>
 datatyp-typ    Func, action, MyDelegate
 instans             MyDelegate delInstance = MyFunc;
 
@@ -18,7 +25,7 @@ instans             MyDelegate delInstance = MyFunc;
 
 namespace pacman;
 
-public delegate void CustomEventDelegateType(object s);
+public <strong>delegate</strong> void CustomEventDelegateType(object s);
 public delegate void CustomEventDelegateTypeWithParam<T>(object s, T otherParameter);
 
 public class Edible : Entity
@@ -89,4 +96,4 @@ private Player me = new Player();
         //bomb.ExplodeEvent += me.OnExploded;
     }
 }
-
+</div>
