@@ -9,7 +9,7 @@ public sealed class Wall : Entity
 
     public Wall() : base("pacman")
     {
-        
+
     }
     
     public override void Create(Scene scene) {

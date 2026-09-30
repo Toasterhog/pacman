@@ -32,6 +32,7 @@ public abstract class Entity
     {
         
     }
+    
 
     public virtual void Update(Scene scene, float deltaTime)
     {

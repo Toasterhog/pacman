@@ -1,6 +1,6 @@
 ﻿namespace pacman;
 
-public class GUI : Entity
-{
-    
-}
+//public class GUI : Entity
+//{
+//    
+//}

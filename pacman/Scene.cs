@@ -1,16 +1,22 @@
-﻿namespace pacman;
+﻿using SFML.Graphics;
+
+namespace pacman;
 
 public class Scene
 {
     public AssetManager AssetManager = new AssetManager();
-    public LevelLoader Level = new LevelLoader();
+    public LevelLoader LevelLoader = new LevelLoader();
     private List<Entity> entities = new List<Entity>();
-    
-    public Scene(){}
+
+    public Scene()
+    {
+        LevelLoader.Load(this);
+    }
 
     public void Spawn(Entity entity)
     {
         entities.Add(entity);
+        entity.Create(this);
     }
 
     public void DeSpawn(Entity entity)
@@ -26,6 +32,29 @@ public class Scene
             entity.Destroy(this);
         }
     }
+
+    public void RenderAll(RenderTarget target)
+    {
+        foreach (Entity entity in entities)
+        {
+            entity.Render(target);
+        }
+    }
+    public IEnumerable<Entity> FindIntersects(FloatRect bounds)
+    {
+        int lastEntity = entities.Count - 1;
+        for (int i = lastEntity; i >= 0; i--)
+        {
+            Entity entity = entities[i];
+            if (entity.dead) continue;
+            if (entity.Bounds.Intersects(bounds))
+            {
+                yield return entity;
+            }
+        }
+    }
+    
+    //public void Update(float deltaTime){}
     //TODO 10 11
 
 }
