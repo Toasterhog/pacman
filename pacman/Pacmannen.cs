@@ -12,8 +12,19 @@ public class Pacmannen : Actor
         sprite.TextureRect = new IntRect(0, 0, 18, 18);
         speed = 100;
         animYOffsets = [0, 18];
+        scene.LoseHealth += OnLoseHealth;
     }
-    
+
+    private void OnLoseHealth(Scene scene, int amount)
+    {
+        Reset();
+    }
+
+    public override void Destroy(Scene scene)
+    {
+        base.Destroy(scene);
+        scene.LoseHealth -= OnLoseHealth;
+    }
 
     protected override int PickDirection(Scene scene)
     {

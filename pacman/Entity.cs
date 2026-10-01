@@ -26,18 +26,23 @@ public abstract class Entity
     public virtual void Create(Scene scene)
     {
         sprite.Texture = AssetManager.GameTexture;
+        
     }
 
     public virtual void Destroy(Scene scene)
     {
         
     }
-    
+    protected virtual void CollideWith(Scene scene, Entity entity){}
 
     public virtual void Update(Scene scene, float deltaTime)
     {
-        
+        foreach (Entity e in  scene.FindIntersects(Bounds))
+        {
+            CollideWith(scene, e);
+        }
     }
+
 
     public virtual void Render(RenderTarget target)
     {

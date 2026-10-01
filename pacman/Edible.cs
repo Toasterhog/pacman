@@ -1,6 +1,9 @@
 ﻿using SFML.Window;
+using SFML.Graphics;
+using SFML.System;
 
-class Edible
+namespace pacman;
+class Edible : Entity
 {
-    
+    public Edible() : base("pacman"){}
 }

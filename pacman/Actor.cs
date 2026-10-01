@@ -19,7 +19,8 @@ public class Actor : Entity
     protected bool IsAligned => (int)(Position.X) % 18 == 0 && (int)(Position.Y) % 18 == 0;
     protected void Reset()
     {
-        
+        Position = new Vector2f(45, 45);
+        Console.WriteLine("RESET");
     }
     protected static Vector2f ToVector(int direction)
     {

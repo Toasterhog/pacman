@@ -26,6 +26,10 @@ public class LevelLoader
                 return new Pacmannen();
             case 'g':
                 return new Ghost();
+            case '.':
+                return new Coin();
+            case 'c':
+                return new Candy();
             default:
                 return null;
         }
@@ -53,6 +57,6 @@ public class LevelLoader
             }
             
         }
-        
+        scene.Spawn(new GUI());
     }
 }

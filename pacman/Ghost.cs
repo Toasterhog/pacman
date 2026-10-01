@@ -5,14 +5,26 @@ namespace pacman;
 
 public class Ghost : Actor
 {
+    private Func<List<int>, Scene, Vector2f, int> pickFromValidMovesDel;
+    
     public override void Create(Scene scene)
     {
         direction = -1;
-        speed = 400.0f;
         base.Create(scene);
-        sprite.TextureRect = new IntRect(36, 0, 18, 18);
         animYOffsets = [36, 54];
-        pickFromValidMovesDel = PickFromValidMoves_BLUE;
+        if (new Random().Next(0, 2) == 1) //blue
+        {
+            sprite.TextureRect = new IntRect(36, 18, 18, 18);
+            pickFromValidMovesDel = PickFromValidMoves_BLUE;
+            speed = 70.0f;
+        }
+        else //red
+        {
+            sprite.TextureRect = new IntRect(36, 0, 18, 18);
+            pickFromValidMovesDel = PickFromValidMoves_RED;
+            speed = 100;
+        }
+        
     }
 
     protected override int PickDirection(Scene scene)
@@ -24,16 +36,24 @@ public class Ghost : Actor
             if(IsFree(scene, i)) validMoves.Add(i);
         }
 
-        //int r = new Random().Next(0, validMoves.Count);
         int res =  pickFromValidMovesDel(validMoves, scene, Position);
         return res;
     }
 
-    private Func<List<int>, Scene, Vector2f, int> pickFromValidMovesDel;
-    
-    private static int PickFromValidMoves_RED(List<int> moves)
+    protected override void CollideWith(Scene scene, Entity e)
     {
-        return new Random().Next(0, moves.Count);
+        if (e is Pacmannen)
+        {
+            scene.PublishLostHealth(1);
+            Console.WriteLine("losthealth");
+            Reset();
+        }
+    }
+    
+    private static int PickFromValidMoves_RED(List<int> moves, Scene scene, Vector2f selfPosition)
+    {
+        int r = new Random().Next(0, moves.Count);
+        return moves[r];
     }
     private static int PickFromValidMoves_BLUE(List<int> moves, Scene scene, Vector2f selfPosition)
     {

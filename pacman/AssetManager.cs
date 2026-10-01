@@ -23,5 +23,5 @@ public class AssetManager
     // }
     public static readonly Texture GameTexture = new Texture($"{AssetPath}pacman.png");
     public static readonly Font GameFont = new Font($"{AssetPath}pixel-font.ttf");
-    public static string levelFilePath => $"{AssetPath}maze.txt";
+    public static string levelFilePath = $"{AssetPath}maze.txt";
 }
