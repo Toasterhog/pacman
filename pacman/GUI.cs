@@ -19,6 +19,8 @@ public class GUI : Entity
         scoreText.Scale = 0.30f * new Vector2f(1, 1);
         currentHealth = maxHealth;
         sprite.TextureRect = new IntRect(5 * 18, 0, 18, 18);
+        scene.EventHandler.LoseHealth += OnLoseHealth;
+        scene.EventHandler.GainScore += OnGainScore;
     }
 
     public override void Render(RenderTarget target)
@@ -34,5 +36,21 @@ public class GUI : Entity
         scoreText.DisplayedString = $"Score: {currentScore}";
         scoreText.Position = new Vector2f(414 - scoreText.GetGlobalBounds().Width, 396);
         target.Draw(scoreText);
+    }
+    private void OnLoseHealth(Scene scene, int amount) {
+        currentHealth-= amount;
+        if (currentHealth <= 0)
+        {
+            dontDestroyonLoad = false;
+            scene.LevelLoader.shouldReload = true;
+        }
+    }
+    private void OnGainScore(Scene scene, int amount)
+    {
+        currentScore += amount;
+        if (!scene.FindByType<Coin>(out _)) {
+            dontDestroyonLoad = true;
+            scene.LevelLoader.shouldReload = true;
+        }
     }
 }

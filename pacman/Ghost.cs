@@ -6,15 +6,15 @@ namespace pacman;
 public class Ghost : Actor
 {
     private Func<List<int>, Scene, Vector2f, int> pickFromValidMovesDel;
+    private float frozenTimer = 0f;
     
     public override void Create(Scene scene)
     {
         direction = -1;
-        base.Create(scene);
-        animYOffsets = [36, 54];
+        animXOffset = [36, 54];
         if (new Random().Next(0, 2) == 1) //blue
         {
-            sprite.TextureRect = new IntRect(36, 18, 18, 18);
+            sprite.TextureRect = new IntRect(36, 0, 18, 18);
             pickFromValidMovesDel = PickFromValidMoves_BLUE;
             speed = 70.0f;
         }
@@ -24,7 +24,42 @@ public class Ghost : Actor
             pickFromValidMovesDel = PickFromValidMoves_RED;
             speed = 100;
         }
-        
+
+        scene.EventHandler.LoseHealth += OnLoseHealth;
+        scene.EventHandler.CandyEaten += OnCandyEaten;
+        base.Create(scene);
+    }
+    private void OnLoseHealth(Scene scene, int amount)
+    {
+        Reset();
+    }
+
+    private void OnCandyEaten(Scene scene, int amount)
+    {
+        frozenTimer = 5f;
+    }
+
+    public override void Update(Scene scene, float deltaTime)
+    {
+        base.Update(scene, deltaTime);
+        frozenTimer = MathF.Max(frozenTimer - deltaTime, 0.0f);
+    }
+
+    public override void Render(RenderTarget target)
+    {
+        if (frozenTimer > 0f)
+        {
+            IntRect rect = sprite.TextureRect;
+            rect.Top = 18;
+            sprite.TextureRect = rect;
+        }
+        else
+        {
+            IntRect rect = sprite.TextureRect;
+            rect.Top = 0;
+            sprite.TextureRect = rect;
+        }
+        base.Render(target);
     }
 
     protected override int PickDirection(Scene scene)
@@ -44,8 +79,10 @@ public class Ghost : Actor
     {
         if (e is Pacmannen)
         {
-            scene.PublishLostHealth(1);
-            Console.WriteLine("losthealth");
+            if (frozenTimer <= 0)
+            {
+                scene.EventHandler.PublishLostHealth(1);
+            }
             Reset();
         }
     }

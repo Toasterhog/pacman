@@ -8,11 +8,11 @@ public class Pacmannen : Actor
 {
     public override void Create(Scene scene)
     {
-        base.Create(scene);
         sprite.TextureRect = new IntRect(0, 0, 18, 18);
         speed = 100;
-        animYOffsets = [0, 18];
-        scene.LoseHealth += OnLoseHealth;
+        animXOffset = [0, 18];
+        scene.EventHandler.LoseHealth += OnLoseHealth;
+        base.Create(scene);
     }
 
     private void OnLoseHealth(Scene scene, int amount)
@@ -23,7 +23,7 @@ public class Pacmannen : Actor
     public override void Destroy(Scene scene)
     {
         base.Destroy(scene);
-        scene.LoseHealth -= OnLoseHealth;
+        scene.EventHandler.LoseHealth -= OnLoseHealth;
     }
 
     protected override int PickDirection(Scene scene)

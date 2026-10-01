@@ -6,6 +6,7 @@ namespace pacman;
 public abstract class Entity
 {
     public bool dead = false;
+    public bool dontDestroyonLoad = false;
     protected readonly Sprite sprite;
     protected readonly string texturename;
     public virtual bool solid => false;
@@ -26,13 +27,9 @@ public abstract class Entity
     public virtual void Create(Scene scene)
     {
         sprite.Texture = AssetManager.GameTexture;
-        
     }
 
-    public virtual void Destroy(Scene scene)
-    {
-        
-    }
+    public virtual void Destroy(Scene scene) { }
     protected virtual void CollideWith(Scene scene, Entity entity){}
 
     public virtual void Update(Scene scene, float deltaTime)
@@ -42,11 +39,9 @@ public abstract class Entity
             CollideWith(scene, e);
         }
     }
-
-
+    
     public virtual void Render(RenderTarget target)
     {
         target.Draw(sprite);
     }
-    
 }

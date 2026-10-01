@@ -2,13 +2,8 @@
 using SFML.System;
 public class LevelLoader
 {
-    // public enum TileContent { empty, wall, point, candy }
-    // public TileContent[,] Map = new TileContent[23,23];
-    // public readonly Dictionary<char, Func<Entity>> loaders = new Dictionary<char, Func<Entity>> 
-    // {
-    //     {'#', () => new Wall()},
-    //     {'.', () => new Wall()}
-    // };
+    public bool shouldReload = false;
+    
     public readonly Dictionary<char, Entity?> char2Entity = new Dictionary<char, Entity?>
     {
         {'#', new Wall()},
@@ -37,6 +32,7 @@ public class LevelLoader
 
     public void Load(Scene scene)
     {
+        scene.Clear();
         Console.Write("loadededed");
         string filepath = AssetManager.levelFilePath;
         int y = -1; //så första blir 0
@@ -57,6 +53,9 @@ public class LevelLoader
             }
             
         }
-        scene.Spawn(new GUI());
+        if (scene.FindByType<GUI>(out GUI found) == false)
+        {
+            scene.Spawn(new GUI());
+        }
     }
 }

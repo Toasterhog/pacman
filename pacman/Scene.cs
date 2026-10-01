@@ -2,18 +2,14 @@
 
 namespace pacman;
 
-public delegate void ValueChangedEvent(Scene scene, int value); 
+
 public sealed class Scene
 {
-    public event ValueChangedEvent GainScore;
-    public event ValueChangedEvent LoseHealth;
     public AssetManager AssetManager = new AssetManager();
     public LevelLoader LevelLoader = new LevelLoader();
+    public EventHandler EventHandler = new EventHandler();
     private List<Entity> entities = new List<Entity>();
-    private int scoreGained;
-    private int lostHealth;
-    public void PublishGainScore(int amount) => scoreGained += amount;
-    public void PublishLostHealth(int amount) => lostHealth += amount;
+    
     public Scene()
     {
         LevelLoader.Load(this);
@@ -25,34 +21,33 @@ public sealed class Scene
         entity.Create(this);
     }
     
-    private void Clear()
+    public void Clear()
     {
         for (int i = entities.Count - 1; i >= 0; i--)
         {
             Entity entity = entities[i];
-            entities.RemoveAt(i);
-            entity.Destroy(this);
+            if (entity.dontDestroyonLoad == false)
+            {
+                entities.RemoveAt(i);
+                entity.Destroy(this);
+            }
         }
     }
     public void UpdateAll(float deltaTime)
     {
-        foreach (Entity entity in entities)
+        if (LevelLoader.shouldReload == true)
+        {
+            LevelLoader.Load(this);
+            LevelLoader.shouldReload = false;
+        }
+        foreach (Entity entity in entities) //update entities
         {
             entity.Update(this, deltaTime);
-            if (scoreGained != 0)
-            {
-                GainScore?.Invoke(this, scoreGained);
-                scoreGained = 0;
-            }
-
-            if (lostHealth != 0)
-            {
-                LoseHealth?.Invoke(this, lostHealth);
-                lostHealth = 0;
-            }
-            
         }
-        for (int i = entities.Count - 1; i >= 0; i--)
+
+        EventHandler.Update(this); //updae eventhandler
+       
+        for (int i = entities.Count - 1; i >= 0; i--) //clear dead ent
         {
             Entity entity = entities[i];
             if (entity.dead == true)
@@ -70,7 +65,7 @@ public sealed class Scene
         }
     }
     public IEnumerable<Entity> FindIntersects(FloatRect bounds)
-    {//hje jag heter anton kommerntaren
+    {//hje jag heter anton kommerntaren, hej heter jag elnour
         int lastEntity = entities.Count - 1;
         for (int i = lastEntity; i >= 0; i--)
         {
