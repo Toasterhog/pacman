@@ -15,8 +15,8 @@ public class Coin : Entity
     {
         if (e is Pacmannen)
         {
-            scene.EventHandler.PublishGainScore(100);
             dead = true;
+            scene.EventHandler.PublishGainScore(100);
         }
     }
 }
@@ -34,9 +34,8 @@ public class Candy : Entity
     {
         if (e is Pacmannen)
         {
-            scene.EventHandler.PublishCandyEaten(1);
             dead = true;
-            
+            scene.EventHandler.PublishCandyEaten(1);
         }
     }
 }

@@ -4,13 +4,6 @@ public class LevelLoader
 {
     public bool shouldReload = false;
     
-    public readonly Dictionary<char, Entity?> char2Entity = new Dictionary<char, Entity?>
-    {
-        {'#', new Wall()},
-        {'.', null},
-        {'|', null},
-    };
-
     Entity? GetEType(char c)
     {
         switch (c)

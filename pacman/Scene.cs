@@ -35,6 +35,7 @@ public sealed class Scene
     }
     public void UpdateAll(float deltaTime)
     {
+        
         if (LevelLoader.shouldReload == true)
         {
             LevelLoader.Load(this);
@@ -78,16 +79,10 @@ public sealed class Scene
         }
     }
     public bool FindByType<T>(out T found) where T : Entity
-    {
+    { 
         for (int i = 0; i < entities.Count; i++)
         {
-            if (entities[i] is T match)
-            {
-                found = match;
-                return true;
-            }
-            Entity entity = entities[i];
-            if (!entity.dead && entity is T typed)
+            if (!entities[i].dead && entities[i] is T typed)
             {
                 found = typed;
                 return true;

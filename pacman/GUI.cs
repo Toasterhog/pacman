@@ -23,6 +23,14 @@ public class GUI : Entity
         scene.EventHandler.GainScore += OnGainScore;
     }
 
+    public override void Destroy(Scene scene)
+    {
+        scene.EventHandler.LoseHealth -= OnLoseHealth;
+        scene.EventHandler.GainScore -= OnGainScore;
+        base.Destroy(scene);
+        
+    }
+
     public override void Render(RenderTarget target)
     {
         sprite.Position = new Vector2f(36, 396);
@@ -45,10 +53,20 @@ public class GUI : Entity
             scene.LevelLoader.shouldReload = true;
         }
     }
+
+    // public override void Update(Scene scene, float deltaTime)
+    // {
+    //     base.Update(scene, deltaTime);
+    //     
+    //     Console.WriteLine(scene.FindByType<Coin>(out _));
+    // }
+
     private void OnGainScore(Scene scene, int amount)
     {
         currentScore += amount;
+        
         if (!scene.FindByType<Coin>(out _)) {
+            Console.WriteLine("pizza");
             dontDestroyonLoad = true;
             scene.LevelLoader.shouldReload = true;
         }

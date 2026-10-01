@@ -29,6 +29,13 @@ public class Ghost : Actor
         scene.EventHandler.CandyEaten += OnCandyEaten;
         base.Create(scene);
     }
+    public override void Destroy(Scene scene)
+    {
+        scene.EventHandler.LoseHealth -= OnLoseHealth;
+        scene.EventHandler.CandyEaten -= OnCandyEaten;
+        base.Destroy(scene);
+        
+    }
     private void OnLoseHealth(Scene scene, int amount)
     {
         Reset();
